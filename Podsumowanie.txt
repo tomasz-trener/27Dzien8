@@ -1,0 +1,5 @@
+﻿
+1) Poznalismy ORM - LinqToSQL  i podstawy składni linq 
+2) poznaliśmy sposoby dodwania, usuwania, edycji danych w bazie przy pomocy LINQ 
+3) dodaliśmy nowy managerZawodnikowLINQ
+4) dodanie wykresów do aplikacji z zastosowaniem metod przetwrzania danych LINQ 
