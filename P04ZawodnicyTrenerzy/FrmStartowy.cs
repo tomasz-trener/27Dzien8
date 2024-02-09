@@ -1,6 +1,7 @@
 ﻿using P02ZawodnicyNoweOkna;
 using P02ZawodnicyNoweOkna.Tools;
 using P03Zawodnicy.Shared.Services;
+using P04Zawodnicy.Shared.Domain;
 using P06Zawodnicy.Shared.Domain;
 using P06Zawodnicy.Shared.Services;
 using System;
@@ -49,8 +50,23 @@ namespace P04ZawodnicyTrenerzy
             Series seriaDanych = new Series("Wzrosty");
             seriaDanych.ChartType = SeriesChartType.Column;
 
-            string[] osX = new string[] { "POL", "GER" };
-            double[] osY = new double[] { 185, 184 };
+            GrupaKraju[] gk = mz.PodajSredniWzrostDlaKazdegoKraju();
+
+            //string[] osX = new string[gk.Length];
+            //double[] osY = new double[gk.Length];
+            //for (int i = 0; i < gk.Length; i++)
+            //{
+            //    osX[i] = gk[i].Kraj;
+            //    osY[i] = gk[i].SredniWzrost;
+            //}
+
+            //inny sposb 
+            string[] osX = gk.Select(x => x.Kraj).ToArray();
+            double[] osY = gk.Select(x => x.SredniWzrost).ToArray();
+
+
+            //string[] osX = new string[] { "POL", "GER" };
+            //double[] osY = new double[] { 185, 184 };
 
             seriaDanych.Points.DataBindXY(osX, osY);
             chWykres.Series.Add(seriaDanych);

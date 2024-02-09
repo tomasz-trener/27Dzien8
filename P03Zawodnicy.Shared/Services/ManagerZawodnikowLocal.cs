@@ -1,6 +1,7 @@
 ﻿
 using P03Zawodnicy.Shared.Domain;
 using P03Zawodnicy.Shared.Services;
+using P04Zawodnicy.Shared.Domain;
 using P06Zawodnicy.Shared.Domain;
 using System;
 using System.Collections.Generic;
@@ -174,6 +175,11 @@ namespace P06Zawodnicy.Shared.Services
         }
 
         public List<Osoba> WyszukajOsoby(string fragmentNazwy)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GrupaKraju[] PodajSredniWzrostDlaKazdegoKraju()
         {
             throw new NotImplementedException();
         }

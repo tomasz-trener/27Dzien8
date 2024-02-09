@@ -1,4 +1,5 @@
 ﻿using P03Zawodnicy.Shared.Domain;
+using P04Zawodnicy.Shared.Domain;
 using P06Zawodnicy.Shared.Domain;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,13 @@ namespace P03Zawodnicy.Shared.Services
         {
             throw new NotImplementedException();
         }
+
+        public GrupaKraju[] PodajSredniWzrostDlaKazdegoKraju()
+        {
+            throw new NotImplementedException();
+        }
+
+     
 
         public Trener[] PodajTrenerow()
         {

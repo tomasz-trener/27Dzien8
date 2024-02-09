@@ -1,6 +1,7 @@
 ﻿
 using P03Zawodnicy.Shared.Domain;
 using P03Zawodnicy.Shared.Services;
+using P04Zawodnicy.Shared.Domain;
 using P05PolaczenieZBaza;
 using P06Zawodnicy.Shared.Domain;
 
@@ -225,6 +226,11 @@ namespace P06Zawodnicy.Shared.Services
 
             wyniki.Sort();
             return wyniki;
+        }
+
+        public GrupaKraju[] PodajSredniWzrostDlaKazdegoKraju()
+        {
+            throw new NotImplementedException();
         }
     }
 }

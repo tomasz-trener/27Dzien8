@@ -1,6 +1,7 @@
 ﻿using P03Zawodnicy.Shared.Domain;
 using P03Zawodnicy.Shared.Services;
 using P04Zawodnicy.Shared.Data;
+using P04Zawodnicy.Shared.Domain;
 using P06Zawodnicy.Shared.Domain;
 using System;
 using System.Collections.Generic;
@@ -168,6 +169,19 @@ namespace P04Zawodnicy.Shared.Services
             zdb.wzrost = z.Wzrost;
             zdb.waga = z.Waga;
             zdb.id_trenera = z.Id_trenera;
+        }
+
+        public GrupaKraju[] PodajSredniWzrostDlaKazdegoKraju()
+        {
+            return 
+                new ModelBazyDataContext(connString)
+                .ZawodnikDb
+                .GroupBy(x=>x.kraj)
+                .Select(x=> new GrupaKraju
+                {
+                    Kraj = x.Key,
+                    SredniWzrost = x.Average(y=>y.wzrost).Value
+                }).ToArray();
         }
     }
 }
