@@ -177,13 +177,38 @@ namespace P01ORMWstep
             // nazwisko o długości 7 ma 6 osoby
             // nazwisko o długości 6 ma 6 osoby
             //.... itd..
-            // wyniki posortuj po liczibie osób w grupie rosnąco
+            // wyniki posortuj po liczbie osób w grupie rosnąco
             // , a jeżeli liczba osób jest taka sama to po długości nazwiska malejąco
 
             // * uwzgędnij tylko zawodników, których nazwisko nie zaczyna się na "a"
             // i wypisz tylko te grupy, które zawierają co najmniej 2 osoby 
 
+            //select len(nazwisko) dlugosc, count(*) liczbaOsob
+            //from zawodnicy
+            //where left(nazwisko, 1) != 'a'
+            //group by len(nazwisko)
+            //having count(*) > 1
+            //order by liczbaOsob, dlugosc desc
 
+            var wyn20 = db.Zawodnik
+                .Where(x => !x.nazwisko.StartsWith("a"))
+                .GroupBy(x => x.nazwisko.Length)
+                .Select(x => new
+                {
+                    DlugoscNazwiska = x.Key,
+                    LiczbaOsob = x.Count(),
+                    Srednia = x.Average(y => y.wzrost),
+                    Max = x.Max(y => y.wzrost)
+                })
+                .Where(x => x.LiczbaOsob > 1)
+                .OrderBy(x => x.LiczbaOsob)
+                .ThenByDescending(x => x.DlugoscNazwiska)
+                .ToArray();
+
+            foreach (var g in wyn20)
+                Console.WriteLine($"Nazwisko o dlugości {g.DlugoscNazwiska} ma {g.LiczbaOsob} osoby");
+
+            Console.ReadKey();
         }
     }
 }
