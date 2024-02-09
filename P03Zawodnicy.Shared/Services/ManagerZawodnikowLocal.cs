@@ -168,7 +168,7 @@ namespace P06Zawodnicy.Shared.Services
             throw new NotImplementedException();
         }
 
-        public int PodajSredniWiekZawodnikow(string kraj)
+        public double PodajSredniWiekZawodnikow(string kraj)
         {
             throw new NotImplementedException();
         }

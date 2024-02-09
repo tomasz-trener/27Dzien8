@@ -51,6 +51,17 @@ namespace P04ZawodnicyTrenerzy
                 }
                 btnZapisz.Visible = false;
             }
+
+            //załadauj trenerów do cbTrenerzy
+            var trenerzy = mz.PodajTrenerow();
+            cbTrenerzy.DataSource = trenerzy;
+            cbTrenerzy.DisplayMember = "PelneImie";
+            cbTrenerzy.ValueMember = "Id";
+
+            if (wyswietlany != null && wyswietlany.Id_trenera != null)
+                cbTrenerzy.SelectedValue = wyswietlany.Id_trenera;
+            else
+                cbTrenerzy.Text = "";
         }
 
         public FrmSzczegoly(Zawodnik zawodnik, FrmStartowy frmStartowy, TrybOkienka trybOkienka, IManagerZawodnikow mz) : this(frmStartowy, trybOkienka,mz)
@@ -65,14 +76,8 @@ namespace P04ZawodnicyTrenerzy
 
             wyswietlany = zawodnik;
 
-            //załadauj trenerów do cbTrenerzy
-            var trenerzy = mz.PodajTrenerow();
-            cbTrenerzy.DataSource = trenerzy;
-            cbTrenerzy.DisplayMember = "PelneImie";
-            cbTrenerzy.ValueMember = "Id";
+           
 
-            if (wyswietlany != null)
-                cbTrenerzy.SelectedValue = wyswietlany.Id_trenera;
 
         }
 

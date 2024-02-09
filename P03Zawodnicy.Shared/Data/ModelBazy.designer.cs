@@ -33,13 +33,10 @@ namespace P04Zawodnicy.Shared.Data
     partial void InsertZawodnikDb(ZawodnikDb instance);
     partial void UpdateZawodnikDb(ZawodnikDb instance);
     partial void DeleteZawodnikDb(ZawodnikDb instance);
+    partial void InsertTrenerDb(TrenerDb instance);
+    partial void UpdateTrenerDb(TrenerDb instance);
+    partial void DeleteTrenerDb(TrenerDb instance);
     #endregion
-		
-		public ModelBazyDataContext() : 
-				base(global::P04Zawodnicy.Shared.Properties.Settings.Default.A_ZawodnicyConnectionString, mappingSource)
-		{
-			OnCreated();
-		}
 		
 		public ModelBazyDataContext(string connection) : 
 				base(connection, mappingSource)
@@ -70,6 +67,14 @@ namespace P04Zawodnicy.Shared.Data
 			get
 			{
 				return this.GetTable<ZawodnikDb>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TrenerDb> TrenerDb
+		{
+			get
+			{
+				return this.GetTable<TrenerDb>();
 			}
 		}
 	}
@@ -279,6 +284,140 @@ namespace P04Zawodnicy.Shared.Data
 					this._waga = value;
 					this.SendPropertyChanged("waga");
 					this.OnwagaChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.trenerzy")]
+	public partial class TrenerDb : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id_trenera;
+		
+		private string _imie_t;
+		
+		private string _nazwisko_t;
+		
+		private System.Nullable<System.DateTime> _data_ur_t;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_treneraChanging(int value);
+    partial void Onid_treneraChanged();
+    partial void Onimie_tChanging(string value);
+    partial void Onimie_tChanged();
+    partial void Onnazwisko_tChanging(string value);
+    partial void Onnazwisko_tChanged();
+    partial void Ondata_ur_tChanging(System.Nullable<System.DateTime> value);
+    partial void Ondata_ur_tChanged();
+    #endregion
+		
+		public TrenerDb()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_trenera", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_trenera
+		{
+			get
+			{
+				return this._id_trenera;
+			}
+			set
+			{
+				if ((this._id_trenera != value))
+				{
+					this.Onid_treneraChanging(value);
+					this.SendPropertyChanging();
+					this._id_trenera = value;
+					this.SendPropertyChanged("id_trenera");
+					this.Onid_treneraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_imie_t", DbType="VarChar(255)")]
+		public string imie_t
+		{
+			get
+			{
+				return this._imie_t;
+			}
+			set
+			{
+				if ((this._imie_t != value))
+				{
+					this.Onimie_tChanging(value);
+					this.SendPropertyChanging();
+					this._imie_t = value;
+					this.SendPropertyChanged("imie_t");
+					this.Onimie_tChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nazwisko_t", DbType="VarChar(255)")]
+		public string nazwisko_t
+		{
+			get
+			{
+				return this._nazwisko_t;
+			}
+			set
+			{
+				if ((this._nazwisko_t != value))
+				{
+					this.Onnazwisko_tChanging(value);
+					this.SendPropertyChanging();
+					this._nazwisko_t = value;
+					this.SendPropertyChanged("nazwisko_t");
+					this.Onnazwisko_tChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_data_ur_t", DbType="DateTime")]
+		public System.Nullable<System.DateTime> data_ur_t
+		{
+			get
+			{
+				return this._data_ur_t;
+			}
+			set
+			{
+				if ((this._data_ur_t != value))
+				{
+					this.Ondata_ur_tChanging(value);
+					this.SendPropertyChanging();
+					this._data_ur_t = value;
+					this.SendPropertyChanged("data_ur_t");
+					this.Ondata_ur_tChanged();
 				}
 			}
 		}

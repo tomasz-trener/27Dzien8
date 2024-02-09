@@ -8,5 +8,11 @@
         <elementListCompartment Id="efd1c6c7-c966-49ad-b55c-40f3ebc4ad31" absoluteBounds="3.2649999999999997, 2.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="93b74eca-7963-4a21-9165-bf682767588e" absoluteBounds="1.125, 2, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ModelBazyDataContext/TrenerDb" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b01b0f58-8bf1-4918-8825-d57170172a8e" absoluteBounds="1.1399999999999997, 2.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

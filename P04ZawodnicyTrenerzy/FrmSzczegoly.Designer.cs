@@ -42,8 +42,8 @@
             this.btnZapisz = new System.Windows.Forms.Button();
             this.btnUsun = new System.Windows.Forms.Button();
             this.pnlKontrolkiDoEdycji = new System.Windows.Forms.Panel();
-            this.cbTrenerzy = new System.Windows.Forms.ComboBox();
             this.dtpDataUr = new P02ZawodnicyNoweOkna.CustomDateTimePicker();
+            this.cbTrenerzy = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numWzrost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWaga)).BeginInit();
             this.pnlKontrolkiDoEdycji.SuspendLayout();
@@ -185,14 +185,6 @@
             this.pnlKontrolkiDoEdycji.Size = new System.Drawing.Size(197, 327);
             this.pnlKontrolkiDoEdycji.TabIndex = 17;
             // 
-            // cbTrenerzy
-            // 
-            this.cbTrenerzy.FormattingEnabled = true;
-            this.cbTrenerzy.Location = new System.Drawing.Point(12, 256);
-            this.cbTrenerzy.Name = "cbTrenerzy";
-            this.cbTrenerzy.Size = new System.Drawing.Size(165, 21);
-            this.cbTrenerzy.TabIndex = 17;
-            // 
             // dtpDataUr
             // 
             this.dtpDataUr.Location = new System.Drawing.Point(12, 147);
@@ -201,11 +193,19 @@
             this.dtpDataUr.TabIndex = 18;
             this.dtpDataUr.Value = new System.DateTime(2024, 2, 8, 11, 41, 57, 472);
             // 
+            // cbTrenerzy
+            // 
+            this.cbTrenerzy.FormattingEnabled = true;
+            this.cbTrenerzy.Location = new System.Drawing.Point(12, 256);
+            this.cbTrenerzy.Name = "cbTrenerzy";
+            this.cbTrenerzy.Size = new System.Drawing.Size(165, 21);
+            this.cbTrenerzy.TabIndex = 17;
+            // 
             // FrmSzczegoly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 342);
+            this.ClientSize = new System.Drawing.Size(219, 342);
             this.Controls.Add(this.pnlKontrolkiDoEdycji);
             this.Name = "FrmSzczegoly";
             this.Text = "FrmSzczegoly";

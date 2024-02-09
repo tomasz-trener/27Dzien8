@@ -10,62 +10,126 @@ using System.Threading.Tasks;
 
 namespace P04Zawodnicy.Shared.Services
 {
-    internal class ManagerZawodnikowLINQ : IManagerZawodnikow
+    public class ManagerZawodnikowLINQ : IManagerZawodnikow
     {
+        string connString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=A_Zawodnicy;Integrated Security=True;Encrypt=False";
         public void Dodaj(Zawodnik z)
         {
-            throw new NotImplementedException();
+            var zd = new ZawodnikDb();
+            mapujNaZawodnikaDb(z, zd);
+
+            ModelBazyDataContext db = new ModelBazyDataContext(connString);
+            db.ZawodnikDb.InsertOnSubmit(zd);
+            db.SubmitChanges();
+
         }
 
         public void Edytuj(Zawodnik edytowany)
         {
-            throw new NotImplementedException();
+            ModelBazyDataContext db = new ModelBazyDataContext(connString);
+            ZawodnikDb zd = db.ZawodnikDb.FirstOrDefault(x => x.id_zawodnika == edytowany.Id_zawodnika);
+            mapujNaZawodnikaDb(edytowany, zd);
+            db.SubmitChanges();
         }
 
         public string[] PodajKraje()
         {
-            throw new NotImplementedException();
+            return new ModelBazyDataContext(connString)
+                .ZawodnikDb
+                .GroupBy(x => x.kraj)
+                .Select(x => x.Key)
+                .ToArray();
         }
 
-        public int PodajSredniWiekZawodnikow(string kraj)
+        public double PodajSredniWiekZawodnikow(string kraj)
         {
-            throw new NotImplementedException();
+            ModelBazyDataContext db = new ModelBazyDataContext(connString);
+
+            double sredniWiek=  db.ZawodnikDb
+                .Where(x => x.kraj.Equals(kraj))
+                .Select(x => DateTime.Now.Year - x.data_ur.Value.Year)
+                .Average();
+
+            return sredniWiek;
         }
 
         public double PodajSredniWzrost(string kraj)
         {
-            throw new NotImplementedException();
+            return new ModelBazyDataContext(connString)
+               .ZawodnikDb
+               .Where(x => x.kraj == kraj)
+               .Average(x => x.wzrost).Value;
         }
 
         public Trener[] PodajTrenerow()
         {
-            throw new NotImplementedException();
+            var trenerzyDb = new ModelBazyDataContext(connString).TrenerDb.ToArray();
+
+            var trenerzy = trenerzyDb.Select(x => new Trener
+            {
+                Id = x.id_trenera,
+                Imie = x.imie_t,
+                Nazwisko = x.nazwisko_t,
+                DataUrodzenia = x.data_ur_t,
+
+            }).ToArray();
+
+            return trenerzy;
         }
 
         public Zawodnik[] PodajZawodnikow(string kraj)
         {
-            throw new NotImplementedException();
+            var zawodnicyDb = new ModelBazyDataContext(connString)
+                .ZawodnikDb
+                .Where(x => x.kraj == kraj)
+                .ToArray();
+
+            return mapujZawodnikow(zawodnicyDb);
         }
 
         public void PosorotujZawodnikowPoNazwisku(Zawodnik[] posortowaniZawodnicy)
         {
-            throw new NotImplementedException();
+            posortowaniZawodnicy = posortowaniZawodnicy.OrderBy(x=>x.Nazwisko).ToArray();
         }
 
         public void Usun(int id)
         {
-            throw new NotImplementedException();
+            ModelBazyDataContext db = new ModelBazyDataContext(connString);
+            var usuwany = db.ZawodnikDb.FirstOrDefault(x=>x.id_zawodnika == id);
+            db.ZawodnikDb.DeleteOnSubmit(usuwany);
+            db.SubmitChanges();
         }
 
         public Zawodnik[] WczytajZawodnikow()
         {
-            var zawodnicyDb = new ModelBazyDataContext().ZawodnikDb.ToArray();
+            var zawodnicyDb = new ModelBazyDataContext(connString).ZawodnikDb.ToArray();
             return mapujZawodnikow(zawodnicyDb);
         }
 
         public List<Osoba> WyszukajOsoby(string fragmentNazwy)
         {
-            throw new NotImplementedException();
+            var db = new ModelBazyDataContext(connString);
+
+            var zawodnicy = db.ZawodnikDb
+                .Where(x => x.imie.Contains(fragmentNazwy) || x.nazwisko.Contains(fragmentNazwy))
+                .Select(x => new Osoba
+                {
+                    Imie = x.imie,
+                    Nazwisko = x.nazwisko,
+                    DataUrodzenia = x.data_ur
+                }).ToArray();
+
+            var trenerzy  = db.TrenerDb
+              .Where(x => x.imie_t.Contains(fragmentNazwy) || x.nazwisko_t.Contains(fragmentNazwy))
+              .Select(x => new Osoba
+              {
+                  Imie = x.imie_t,
+                  Nazwisko = x.nazwisko_t,
+                  DataUrodzenia = x.data_ur_t
+              }).ToArray();
+
+            return zawodnicy.Concat(trenerzy).ToList();
+
         }
 
         private Zawodnik[] mapujZawodnikow(params ZawodnikDb[] dane)
@@ -78,6 +142,7 @@ namespace P04Zawodnicy.Shared.Services
                     Id_zawodnika = dane[i].id_zawodnika,
                     Id_trenera = dane[i].id_trenera,
                     Imie = dane[i].imie,
+                    Nazwisko = dane[i].nazwisko,
                     Kraj = dane[i].kraj,
                     DataUrodzenia = dane[i].data_ur,
                     Wzrost = (int)dane[i].wzrost,
@@ -85,6 +150,18 @@ namespace P04Zawodnicy.Shared.Services
                 };
             }
             return tab;
+        }
+
+        private void mapujNaZawodnikaDb(Zawodnik z, ZawodnikDb zdb)
+        {
+            zdb.id_zawodnika = z.Id_zawodnika;
+            zdb.imie = z.Imie;
+            zdb.nazwisko = z.Nazwisko;
+            zdb.kraj = z.Kraj;
+            zdb.data_ur = z.DataUrodzenia;
+            zdb.wzrost = z.Wzrost;
+            zdb.waga = z.Waga;
+            zdb.id_trenera = z.Id_trenera;
         }
     }
 }

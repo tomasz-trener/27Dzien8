@@ -178,7 +178,7 @@ namespace P06Zawodnicy.Shared.Services
             end
                     */
 
-        public int PodajSredniWiekZawodnikow(string kraj)
+        public double PodajSredniWiekZawodnikow(string kraj)
         {
             using (SqlConnection connection = new SqlConnection(pzb.ConnectionString))
             {

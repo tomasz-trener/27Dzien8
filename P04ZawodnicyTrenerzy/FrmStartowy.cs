@@ -159,7 +159,7 @@ namespace P04ZawodnicyTrenerzy
         private void btnPokazSreniWiek_Click(object sender, EventArgs e)
         {
             string wybranyKraj = cbKraje.SelectedItem.ToString();
-            int sredniWiek = mz.PodajSredniWiekZawodnikow(wybranyKraj);
+            double sredniWiek = mz.PodajSredniWiekZawodnikow(wybranyKraj);
             MessageBox.Show($"Średni wiek zaowdników z kraju {wybranyKraj}: {sredniWiek}");
         }
 
