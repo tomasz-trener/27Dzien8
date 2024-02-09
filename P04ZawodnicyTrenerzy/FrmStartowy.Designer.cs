@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblRaport = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbKraje = new System.Windows.Forms.ComboBox();
@@ -41,6 +44,8 @@
             this.btnPokazSreniWiek = new System.Windows.Forms.Button();
             this.pnlFlagi = new System.Windows.Forms.Panel();
             this.btnWyszukiwarka = new System.Windows.Forms.Button();
+            this.chWykres = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.chWykres)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRaport
@@ -163,11 +168,28 @@
             this.btnWyszukiwarka.UseVisualStyleBackColor = true;
             this.btnWyszukiwarka.Click += new System.EventHandler(this.btnWyszukiwarka_Click);
             // 
+            // chWykres
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chWykres.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chWykres.Legends.Add(legend1);
+            this.chWykres.Location = new System.Drawing.Point(626, 36);
+            this.chWykres.Name = "chWykres";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chWykres.Series.Add(series1);
+            this.chWykres.Size = new System.Drawing.Size(300, 300);
+            this.chWykres.TabIndex = 17;
+            this.chWykres.Text = "chart1";
+            // 
             // FrmStartowy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 457);
+            this.ClientSize = new System.Drawing.Size(967, 457);
+            this.Controls.Add(this.chWykres);
             this.Controls.Add(this.btnWyszukiwarka);
             this.Controls.Add(this.pnlFlagi);
             this.Controls.Add(this.btnPokazSreniWiek);
@@ -183,6 +205,7 @@
             this.Controls.Add(this.lbDane);
             this.Name = "FrmStartowy";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.chWykres)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,6 +226,7 @@
         private System.Windows.Forms.Button btnPokazSreniWiek;
         private System.Windows.Forms.Panel pnlFlagi;
         private System.Windows.Forms.Button btnWyszukiwarka;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chWykres;
     }
 }
 

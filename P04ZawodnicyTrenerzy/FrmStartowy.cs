@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace P04ZawodnicyTrenerzy
 {
@@ -39,6 +40,20 @@ namespace P04ZawodnicyTrenerzy
             var kraje  = mz.PodajKraje();
             cbKraje.DataSource = kraje;
             generujObraziKrajow(kraje);
+            przygotujWykres();
+        }
+
+        private void przygotujWykres()
+        {
+            chWykres.Series.Clear();
+            Series seriaDanych = new Series("Wzrosty");
+            seriaDanych.ChartType = SeriesChartType.Column;
+
+            string[] osX = new string[] { "POL", "GER" };
+            double[] osY = new double[] { 185, 184 };
+
+            seriaDanych.Points.DataBindXY(osX, osY);
+            chWykres.Series.Add(seriaDanych);
         }
 
         private void generujObraziKrajow(string[] kraje)
