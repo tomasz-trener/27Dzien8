@@ -4,6 +4,7 @@ using P04Zawodnicy.Shared.Data;
 using P06Zawodnicy.Shared.Domain;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,12 @@ namespace P04Zawodnicy.Shared.Services
 {
     public class ManagerZawodnikowLINQ : IManagerZawodnikow
     {
-        string connString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=A_Zawodnicy;Integrated Security=True;Encrypt=False";
+        //string connString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=A_Zawodnicy;Integrated Security=True;Encrypt=False";
+        string connString;
+        public ManagerZawodnikowLINQ()
+        {
+            connString =ConfigurationManager.ConnectionStrings["A_ZawodnicyConnectionString"].ConnectionString;
+        }
         public void Dodaj(Zawodnik z)
         {
             var zd = new ZawodnikDb();
