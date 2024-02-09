@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -274,6 +275,31 @@ namespace P01ORMWstep
 
 
             // wypisz grupy nazwisk zawodnikow urodzonych w tym samym miesiacu 
+
+            var wyn31 = db.Zawodnik
+                .Where(x => x.data_ur.HasValue)
+                .GroupBy(x => x.data_ur.Value.Month)
+                .Select(x => new
+                {
+                    NrMiesiaca = x.Key,
+                    Nazwsika = string.Join(" ,", x.Select(y => y.nazwisko).ToArray())
+                })
+                .OrderBy(y => y.NrMiesiaca)
+                .ToArray();
+
+            //foreach (var g in wyn31)
+            //    Console.WriteLine(g.NrMiesiaca + " " + g.Nazwsika);
+
+            //foreach (var g in wyn31)
+            //    Console.WriteLine(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.NrMiesiaca) + " " + g.Nazwsika);
+
+
+            var polskieWyrazy = new CultureInfo("pl-PL");
+
+            foreach (var g in wyn31)
+                Console.WriteLine(polskieWyrazy.DateTimeFormat.GetMonthName(g.NrMiesiaca) + " " + g.Nazwsika);
+
+            Console.ReadKey();
         }
     }
 }
