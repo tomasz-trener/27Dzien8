@@ -44,7 +44,7 @@ namespace P04ZawodnicyTrenerzy
             przygotujWykres();
         }
 
-        private void przygotujWykres()
+        private void przygotujWykres(double? sredniWzrost = null)
         {
             chWykres.Series.Clear();
             Series seriaDanych = new Series("Wzrosty");
@@ -70,6 +70,21 @@ namespace P04ZawodnicyTrenerzy
 
             seriaDanych.Points.DataBindXY(osX, osY);
             chWykres.Series.Add(seriaDanych);
+
+            // dodanie linnii sredniego wzrostu 
+            if (sredniWzrost != null)
+            {
+                Series seriaSredniegoWzrostu = new Series("Średni wzrost");
+                seriaSredniegoWzrostu.ChartType = SeriesChartType.Line;
+                seriaSredniegoWzrostu.BorderWidth = 3;
+                seriaSredniegoWzrostu.Color = Color.Red;
+
+                foreach (var punkt in chWykres.Series["Wzrosty"].Points)
+                    seriaSredniegoWzrostu.Points.AddXY(punkt.AxisLabel, sredniWzrost);
+
+                chWykres.Series.Add(seriaSredniegoWzrostu);
+            }
+
         }
 
         private void generujObraziKrajow(string[] kraje)
@@ -118,6 +133,7 @@ namespace P04ZawodnicyTrenerzy
 
                 double wzrost = mz.PodajSredniWzrost(zaznaczonyKraj);
                 lblRaport.Text = string.Format("Średni wzrost: {0:0.00} cm", wzrost);
+                przygotujWykres(wzrost);
             }
         }
 
