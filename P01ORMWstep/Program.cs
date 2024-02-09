@@ -205,10 +205,75 @@ namespace P01ORMWstep
                 .ThenByDescending(x => x.DlugoscNazwiska)
                 .ToArray();
 
-            foreach (var g in wyn20)
-                Console.WriteLine($"Nazwisko o dlugości {g.DlugoscNazwiska} ma {g.LiczbaOsob} osoby");
+            //foreach (var g in wyn20)
+            //    Console.WriteLine($"Nazwisko o dlugości {g.DlugoscNazwiska} ma {g.LiczbaOsob} osoby");
 
-            Console.ReadKey();
+
+
+            // Dla kazdego kraju, wypisz po przecinku liste nazwisk zawodników z danego kraju 
+
+            var wyn21 = db.Zawodnik
+                .GroupBy(x => x.kraj)
+                .Select(x => new
+                {
+                    Kraj = x.Key,
+                    Nazwiska = x.Select(y => y.nazwisko).OrderBy(y => y)
+                }).ToArray();
+
+            foreach (var g in wyn21)
+            {
+                Console.WriteLine("Kraj: " + g.Kraj);
+                Console.WriteLine(string.Join(" ,", g.Nazwiska));               
+            }
+            //Console.ReadKey();
+
+            // do tej pory zawsze wybieralismy zbiór elementów 
+
+            // chcemy znaleź jeden wybrany rekord 
+
+            Zawodnik wyn22 = db.Zawodnik.Where(x => x.nazwisko == "małysz").ToArray()[0];
+
+            Zawodnik wyn23 = db.Zawodnik.Where(x => x.nazwisko == "małysz").FirstOrDefault();
+
+            Zawodnik wyn24 = db.Zawodnik.FirstOrDefault(x => x.nazwisko == "małysz");
+
+            Zawodnik wyn25 = db.Zawodnik.FirstOrDefault(x => x.id_zawodnika == 7);
+
+            // znajdz zawodnikow których waga jest o dokładnie 1 kilogram mniejsza od wagi najwyższego zawodnika
+
+            var najwyższy = db.Zawodnik.OrderByDescending(x => x.wzrost).FirstOrDefault();
+            var wyn26 = db.Zawodnik.Where(x => x.waga == najwyższy.waga - 1).ToArray();
+
+            // inne rozwiazanie 
+
+            var wyn27 = db.Zawodnik.Where(x => x.waga == db.Zawodnik.OrderByDescending(y => y.wzrost).FirstOrDefault().waga - 1).ToArray();
+
+            // jeszcze inne 
+
+            var najwyzszyWzrost = zawodnicy.Select(x => x.wzrost).Max();
+            var wyn28 = zawodnicy.Where(x=>x.waga == db.Zawodnik.FirstOrDefault(y=>y.wzrost == najwyzszyWzrost).waga -1).ToArray();
+
+            // jeszce inne 
+
+            var wyn29 = zawodnicy.Where(x=>x.waga == db.Zawodnik.FirstOrDefault(y=>y.wzrost == zawodnicy.Select(z=> z.wzrost).Max()).waga-1).ToArray();
+
+            // dla każdego kraju wypisz imie i nazwisko najwyzszego zawodnika z tego kraju 
+
+            var wyn30 = db.Zawodnik
+                .GroupBy(x => x.kraj)
+                .Select(x => new
+                {
+                    Kraj = x.Key,
+                    Najwyzsi = db.Zawodnik.Where(y => y.wzrost == x.Select(z => z.wzrost).Max()).Select(y => y.imie + " " + y.nazwisko + " (" + y.wzrost + ")").ToArray()
+                }).ToArray();
+
+            //foreach (var g in wyn30)
+            //    Console.WriteLine($"kraj: {g.Kraj} zawodnicy: {string.Join(" ,", g.Najwyzsi)}");
+
+            //Console.ReadKey();
+
+
+            // wypisz grupy nazwisk zawodnikow urodzonych w tym samym miesiacu 
         }
     }
 }
